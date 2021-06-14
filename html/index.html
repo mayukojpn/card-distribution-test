@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Test Program</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <script>
+  $(document).on('click', '#submit', function() {
+    var data = $(this).closest('form');
+
+    if ( data.children('.players').val() <= 0 ) {
+      $("#output").html("Input value does not exist or value is invalid");
+      return;
+    }
+
+    $.ajax({
+      type: "POST",
+      url: "card.php",
+      data: data.serialize(),
+      success: function(data, dataType){
+        $("#output").html(data);
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown){
+        $("#output").html("");
+      }
+    });
+  });
+  </script>
+
+<form>
+  <input name="players" class="players" type="number">
+  <button id="submit" type="button">Submit</button>
+</form>
+<div id="output">
+</div>
+</body>
+</html>
